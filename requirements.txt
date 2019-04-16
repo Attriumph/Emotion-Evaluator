@@ -1,0 +1,7 @@
+Flask==1.0.2
+google-api-python-client==1.7.8
+google-auth==1.6.2
+google-auth-httplib2==0.0.3
+google-cloud-speech==0.36.3
+pyaudio==0.2.11
+six==1.12.0

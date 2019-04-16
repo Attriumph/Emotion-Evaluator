@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Dokdo" rel="stylesheet">
+
+    <title>Emotion Judge</title>
+    <style>
+        body {
+            background-image: url('../static/img/background.jpg');
+            color: floralwhite;
+        }
+
+        .content-body {
+            display: flex;
+            justify-content: center;
+        }
+
+        h1 {
+            font-family: 'Dokdo', cursive;
+            font-size: 5rem;
+            padding: 20px 0;
+            width: 500px;
+            margin: auto;
+            text-shadow: 0 0 5rem black;
+
+        }
+
+        .myButton {
+            margin: 0 auto;
+            width: 130px;
+            display: block;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        #myEmotion {
+            width: 120px;
+            display: block;
+            margin: 0 auto;
+            margin-bottom: 18px;
+        }
+
+        .footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            text-align: left;
+            padding-bottom: 30px;
+        }
+
+        /* The Modal (background) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            padding-top: 100px; /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0, 0, 0); /* Fallback color */
+            background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+        }
+
+        /* Modal Content */
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        /* The Close Button */
+        .close {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+<h1>Emotion Judge</h1>
+
+<div class="container content-body">
+    <form class="col-12 col-md-8" enctype="multipart/form-data"
+          style="border: floralwhite solid 3px;border-radius: 8px; padding:20px; box-shadow: 0 0 1rem #ffc600;">
+
+
+        <img id="myEmotion" src="../static/img/normal.png" alt="image">
+
+        <p class="card-text" style="color: wheat;">
+            The App could judge your emotion by what you say, which is concluded
+            by Natural Language Process.There are five levels, including
+            <strong>Painful</strong>, <strong>Sad</strong>,<strong>Normal</strong>,
+            <strong>Happy</strong>, <strong>Excited</strong>.
+        </p>
+
+
+        <button id="start" type="submit" class="btn btn-primary myButton">
+            Record
+        </button>
+
+        <div class="form-group">
+            <input id="ok" type="button" class="btn btn-info myButton" value="Analyze">
+        </div>
+    </form>
+</div>
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>Some text in the Modal..</p>
+    </div>
+
+</div>
+<div class="footer">
+    <p style="margin-left: 150px; font-size: 2rem; color: cornsilk; text-shadow:0 0 5px floralwhite"> Powered By</p>
+    <img src="../static/img/flask.png" style="margin-left:40px;width: 100px;">
+    <img src="../static/img/boot.png" style="margin-left:70px;width: 100px;">
+    <img src="../static/img/gcp.png" style="width: 300px;">
+
+
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
+
+    function showEmotion(res) {
+        var score = res['score'];
+        var emotion = "normal";
+        {#alert(score);#}
+        if (score <= -0.6) {
+            emotion = "painful";
+        } else if (score <= -0.2) {
+            emotion = "sad";
+        } else if (score <= 0.2) {
+            emotion = "normal";
+        } else if (score < 0.6) {
+            emotion = "happy"
+        } else {
+            emotion = "excited"
+        }
+
+        var img_emotion = document.getElementById("myEmotion");
+        img_emotion.setAttribute('src', "../static/img/" + emotion + ".png");
+
+    }
+
+    var modal = document.getElementById('myModal');
+    var bt = document.getElementById("start");
+    bt.onclick = function () {
+
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 201) {
+
+                alert(xhr.responseText);
+            } else {
+
+            }
+        }
+        var fd = new FormData();
+        console.log("send data");
+
+        xhr.open("POST", "/background_process_test", true);
+        xhr.send(fd);
+        {#modal.style.display = "block";#}
+
+    };
+
+    var bt2 = document.getElementById("ok");
+    bt2.onclick = function () {
+        var xhr = new XMLHttpRequest();
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 201) {
+                var res = JSON.parse(xhr.responseText);
+                var txt = res[0]
+                alert("You said:"+txt);
+                {#alert(res[1]['score']);#}
+
+                showEmotion((res[1]));
+            }
+        }
+
+        console.log("get data");
+        xhr.open("GET", "/getdata", true);
+        xhr.send();
+
+    };
+
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+</script>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+</html>
