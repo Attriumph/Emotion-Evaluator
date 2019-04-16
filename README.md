@@ -23,6 +23,6 @@ We've learned how to use Google API and how to combine them to do web developmen
 ## What's next for Emotion Judgement by NLP
 We want to enrich functions like adding animation and facial recognition to help app do more accurate judgements.
 <div align="center">
-    <img src="https://github.com/Attriumph/Place-Search-Service/blob/master/static/img/demo.jpeg" alt="info" width="30%" style="display:inline" />
-    <img src="https://github.com/Attriumph/Place-Search-Service/blob/master/static/img/demo1.jpeg" alt="info" width="30%" style="display:inline" />
+    <img src="https://github.com/Attriumph/Emotion-Evaluator/blob/master/static/img/demo.jpeg" alt="info"/>
+    <img src="https://github.com/Attriumph/Emotion-Evaluator/blob/master/static/img/demo1.jpeg" alt="info"/>
 </div>  
