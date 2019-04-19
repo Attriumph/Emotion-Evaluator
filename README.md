@@ -1,3 +1,8 @@
+<p align=""left>
+<img src="https://img.shields.io/badge/License-MIT-orange.svg">
+<img src="https://img.shields.io/badge/release--date-04%2F2019-green.svg">	
+</p>
+
 # Emotion-Evaluator
 This is our project of HackSC 2019. The Web App could evaluate speaker's emotion by what they are saying.There are five levels, including Painful, Sad,Normal, Happy, Excited. All of them are expressed by funny emojis.
 ## Team member:
