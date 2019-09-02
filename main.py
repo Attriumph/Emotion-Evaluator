@@ -18,7 +18,6 @@ def hello():
 
 @app.route('/background_process_test', methods=['POST'])
 def background_process_test():
-    print("Hello！！！！！！！！！")
     global data
     data = speech.main()
     print(data)
@@ -26,7 +25,6 @@ def background_process_test():
 
 @app.route('/getdata')
 def get_data():
-    print("get data！！！！！！！！！")
     global data
     print("cur data", data)
     # data = {'name': "John", 'age': 31, 'city': "New York"}
